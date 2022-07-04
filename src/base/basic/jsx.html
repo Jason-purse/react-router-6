@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jsx render</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="../../common/react.development.js" type="text/javascript"></script>
+<script src="../../common/react-dom.development.js" type="text/javascript"></script>
+<script src="../../common/babel.min.js" type="text/javascript"></script>
+<script type="text/babel">
+    let e = React.createElement;
+
+    class App extends React.Component {
+        render() {
+            return (
+                <button onClick={() => {
+                    console.log("click me111")
+                }}>click me</button>
+            )
+        }
+    }
+
+    ReactDOM.render(e(App), document.querySelector("#app"))
+</script>
+</body>
+</html>

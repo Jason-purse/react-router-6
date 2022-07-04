@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件生命周期</title>
+</head>
+<body>
+
+<div id="app"></div>
+<script src="../../common/react.development.js" type="text/javascript"></script>
+<script src="../../common/react-dom.development.js" type="text/javascript"></script>
+<script src="../../common/babel.min.js" type="text/javascript"></script>
+<script src="../../common/prop-types.js" type="text/javascript"></script>
+<script type="text/babel">
+    class App extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                loginData: {
+                    // 由于使用了响应式函数,那么render 也会带动其他数据刷新 ..
+                    username: "",
+                    username1: "",
+                    password: "" ,
+                    password1: ""
+                },
+                data: [
+                    {label: 1,value: 1}
+                ],
+                count: 1
+            }
+            this.dataChange = this.dataChange.bind(this)
+                this.listRef = React.createRef()
+
+            console.log("组件将被挂载")
+        }
+        // 由于render 函数执行过程中,表达式会对函数进行执行 ...于是一个复杂的操作,我们可以通过
+        // 函数柯里化进行优雅的实现 ...
+        dataChange(fieldName) {
+            return (event) => {
+                this.state.loginData[fieldName] = event.target.value;
+            }
+        }
+
+
+        render() {
+            return (
+                <div>
+                    <input onChange={this.dataChange("username")}/>
+                    <button onClick={event => {this.setState({loginData: {...this.state.loginData,username1: `23423`}})}}>刷新</button>
+                    <p>输入内容</p>
+                    <p>{this.state.loginData.username}</p>
+                    <p>{this.state.loginData.username1}</p>
+                    {console.log("rendering ...")}
+                    <div ref={this.listRef} className="list" style={
+                        {
+                            height: "400px",
+                            overflow: "auto"
+                        }
+                    }>
+                        <ul>
+                            {this.state.data.map(el => (
+                                <li key={el.value} value={el.value}>{el.label}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+            )
+        }
+
+        componentDidMount() {
+            console.log("组件已经被挂载")
+
+            setInterval(() => {
+                this.state.data.push({label: ++this.state.count,value: this.state.count})
+                 this.setState({data: this.state.data})
+            },1000)
+        }
+
+        componentWillUnmount() {
+            console.log("组件取消挂载 ..")
+        }
+
+        /**
+         * 从props中衍生数据
+         * @param props
+         * @return {{}}
+         */
+        static getDerivedStateFromProps(props) {
+            console.log(`组件即将接收新的属性  ${JSON.stringify(props)}`)
+            return {
+                d: props.a
+            }
+        }
+
+        /**
+         * 拿到之前的属性      (例如我们想让视角跟随列表移动)
+         * @param prevProps
+         * @param prevState
+         */
+        getSnapshotBeforeUpdate(prevProps, prevState) {
+            // console.log(`prev Props: ${JSON.stringify(prevProps)}  prev State: ${JSON.stringify(prevState)}`)
+            return {
+                age: "456",
+                listHeight:  this.listRef.current.scrollHeight
+            }
+        }
+
+        /**
+         * 已经更新完毕 ...
+         * @param prevProps
+         * @param prevState
+         * @param snapshot
+         */
+        componentDidUpdate(prevProps, prevState, snapshot) {
+            // console.log(`prev Props: ${JSON.stringify(prevProps)}  prev State: ${JSON.stringify(prevState)}   snapshot: ${JSON.stringify(snapshot)}`)
+            this.listRef.current.scrollTop += this.listRef.current.scrollHeight - snapshot.listHeight;
+            console.log(`当前list scrollHeight: ${this.listRef.current.scrollHeight}  prev list scrollHeight: ${snapshot.listHeight}`)
+            console.log("滚动scrollTop" + this.listRef.current.scrollTop)
+        }
+    }
+
+    ReactDOM.render(<App a={123}/>, document.querySelector("#app"))
+</script>
+</body>
+</html>

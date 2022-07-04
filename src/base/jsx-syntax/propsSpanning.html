@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>props spanning ...</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="../../common/prop-types.js" type="text/javascript"></script>
+<script src="../../common/react.development.js" type="text/javascript"></script>
+<script src="../../common/react-dom.development.js" type="text/javascript"></script>
+<script src="../../common/babel.min.js" type="text/javascript"></script>
+<script type="text/babel">
+    let e = React.createElement;
+    let initText = "123"
+
+    class App extends React.Component {
+           static propTypes  = {
+               name: PropTypes.string.isRequired,
+               age: PropTypes.number.isRequired,
+               sex: PropTypes.string.isRequired
+           }
+
+        constructor(props) {
+            super(props);
+        }
+
+
+                    // pure function
+        render() {
+            return (
+                <React.Fragment>
+                     <h1>个人信息</h1>
+                    <p>
+                        <span>{this.props.name}</span> | {" "}
+                        <span>{this.props.age}</span>  | {" "}
+                        <span>{this.props.sex}</span>  | {" "}
+                    </p>
+                </React.Fragment>
+            )
+        }
+    }
+
+        App.defaultProps  = {
+            sex: '女',
+            age: 40
+        }
+
+
+    // let props = {name: "fans",sex: undefined};
+    ReactDOM.render(<App name={"123"} />, document.querySelector("#app"))
+</script>
+</body>
+</html>

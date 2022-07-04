@@ -3,41 +3,20 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Routes,Route} from "react-router-dom";
+
 import Expreses from "./routes/expenses";
 import Invoices from "./routes/invoices";
 import Invoice from "./routes/invoice";
+import DescentRoutes from "./routes/descentRoutes";
+import {BrowserRouter,Route, Routes} from "react-router-dom";
+import VideoConference from "./routes/video-conference/videoConference";
+import {Outlet} from "react-router";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       <BrowserRouter>
-          <Routes>
-              <Route path="/" element = {<App />} >
-                  <Route path="expenses" element = {<Expreses />} />
-                  <Route path="invoices" element = {<Invoices />} >
-                      {/*默认路由,也可以说叫做 index 路由*/}
-                      {/*<Route index element = {*/}
-                      {/*    <main style={{padding: "1rem"}}>*/}
-                      {/*        <p>Select an invoice</p>*/}
-                      {/*    </main>*/}
-                      {/*}/>*/}
-
-                      {/*默认路由*/}
-                      <Route path="" element = {
-                          <main style={{padding: "1rem"}}>
-                              <p>请选择一个invoice</p>
-                          </main>
-                      }/>
-                      <Route path=":invoiceId" element = {<Invoice />} />
-                  </Route>
-                  <Route path="*" element = {
-                      <main style={{padding: "1rem"}}>
-                          <p>There's nothing here !!!</p>
-                      </main>
-                  } />
-              </Route>
-          </Routes>
+          <App />
       </BrowserRouter>
   </React.StrictMode>
 );
