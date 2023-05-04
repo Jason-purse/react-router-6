@@ -3,14 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-import Expreses from "./routes/expenses";
-import Invoices from "./routes/invoices";
-import Invoice from "./routes/invoice";
-import DescentRoutes from "./routes/descentRoutes";
-import {BrowserRouter,Route, Routes} from "react-router-dom";
-import VideoConference from "./routes/video-conference/videoConference";
-import {Outlet} from "react-router";
+import {BrowserRouter} from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

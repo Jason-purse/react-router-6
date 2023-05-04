@@ -20,7 +20,7 @@ export default class VideoConference extends React.Component {
 
 
             >
-                <NavLink to="/descent" >点击返回</NavLink>
+                <NavLink to="../expenses" >点击返回</NavLink>
                 {/*<button onClick={event => navigate("/descent")}>返回,点击路由再过来</button>*/}
                 <JitsiMeeting
                     key={count}

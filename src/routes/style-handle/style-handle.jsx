@@ -10,6 +10,8 @@ export default class StyleHandle extends React.Component {
         }
         this.requestData = this.requestData.bind(this)
     }
+
+
     requestData() {
         Request.get("/api/datas").then(data => {
             console.log(data)
